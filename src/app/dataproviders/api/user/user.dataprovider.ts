@@ -5,7 +5,9 @@ import {Injectable} from "@angular/core";
 
 const entryPoint = 'users';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserDataProvider extends BaseApiDataProvider<UserInterface> {
 
   constructor(http: HttpClient) {

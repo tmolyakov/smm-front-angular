@@ -1,12 +1,14 @@
 import { BaseEntity } from '../base-entity';
 import { BaseEntityDataProvider } from '../base-entity.dataprovider';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 export class BaseApiDataProvider<T extends BaseEntity> implements BaseEntityDataProvider<T> {
   protected apiUrl: string = 'http://localhost/api/';
   protected apiUri: string = '';
   protected apiUrn: string = '';
+
+  private entity!: BaseEntity;
 
   constructor(protected http: HttpClient, protected entryPoint: string) {
     this.apiUri = this.apiUrl + this.entryPoint;
@@ -21,7 +23,13 @@ export class BaseApiDataProvider<T extends BaseEntity> implements BaseEntityData
   }
 
   get(uuid: string): Observable<T> {
-    return this.http.get<T>(this.apiUri).pipe();
+    console.log('get');
+    return this.http.get<T>(this.apiUri).pipe(
+      map((entity: T) => {
+        this.entity = entity;
+        return entity;
+      })
+    );
   }
 
   getList(limit: number, offset: number): Observable<T[]> {
