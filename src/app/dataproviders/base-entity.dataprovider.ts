@@ -1,4 +1,4 @@
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 export interface BaseEntityDataProvider<T> {
   get(uuid: string): Observable<T>;
