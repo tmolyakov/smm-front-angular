@@ -3,7 +3,7 @@ import { BaseApiDataProvider } from "../base-api-dataprovider";
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 
-const entryPoint = 'users';
+const entryPoint = 'user/get/';
 
 @Injectable({
   providedIn: 'root'

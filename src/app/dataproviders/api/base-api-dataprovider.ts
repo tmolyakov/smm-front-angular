@@ -1,14 +1,18 @@
 import { BaseEntity } from '../base-entity';
 import { BaseEntityDataProvider } from '../base-entity.dataprovider';
 import { catchError, Observable, tap, map } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 export class BaseApiDataProvider<T extends BaseEntity> implements BaseEntityDataProvider<T> {
-  protected apiUrl: string = 'http://localhost/api/';
+  protected apiUrl: string = 'http://localhost:80/api/rest/';
   protected apiUri: string = '';
   protected apiUrn: string = '';
 
   private entity!: BaseEntity;
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'X-AUTH-TOKEN': '23c2cb61fae4910667c68daa1394f6db' })
+  };
 
   constructor(protected http: HttpClient, protected entryPoint: string) {
     this.apiUri = this.apiUrl + this.entryPoint;
@@ -24,7 +28,7 @@ export class BaseApiDataProvider<T extends BaseEntity> implements BaseEntityData
 
   get(uuid: string): Observable<T> {
     console.log('get');
-    return this.http.get<T>(this.apiUri).pipe(
+    return this.http.get<T>(this.apiUri + '4d47b571-6363-42d5-a483-2d6b2b9c4491', this.httpOptions).pipe(
       map((entity: T) => {
         this.entity = entity;
         return entity;
