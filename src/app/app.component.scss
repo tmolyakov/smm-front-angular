@@ -20,3 +20,11 @@ body, input[type="text"], button {
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+section {
+  padding: 10px 10px 50px;
+}
+
+section.content-bottom {
+  padding-top: 100px;
+}
