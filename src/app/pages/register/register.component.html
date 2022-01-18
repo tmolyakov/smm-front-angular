@@ -1,20 +1,45 @@
 <main class="form-signin">
-  <form>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
     <div class="form-floating">
-      <input type="email" class="form-control" id="userName" placeholder="name" required>
+      <input
+        formControlName="name"
+        type="text"
+        class="form-control"
+        id="userName"
+        placeholder="name">
       <label for="userName">Name</label>
     </div>
     <div class="form-floating">
-      <input type="email" class="form-control" id="userEmail" placeholder="name@example.com" required>
+      <input
+        formControlName="email"
+        type="email"
+        class="form-control"
+        id="userEmail"
+        [class.valid]="profileForm.get('email')?.valid"
+        [class.invalid]="(profileForm.get('email')?.invalid && profileForm.get('email')?.touched)"
+        placeholder="name@example.com">
       <label for="userEmail">Email address</label>
+      <span class="text-danger"
+            *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.hasError('email')"
+      >* wrong email</span>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="userPassword" placeholder="Password" required>
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control"
+        id="userPassword"
+        [class.valid]="profileForm.get('password')?.valid"
+        [class.invalid]="(profileForm.get('password')?.invalid && profileForm.get('password')?.touched)"
+        placeholder="Password">
       <label for="userPassword">Password</label>
+      <span class="text-danger"
+            *ngIf="profileForm.get('password')?.touched && profileForm.get('password')?.hasError('minlength')"
+      >* min length - 4 characters</span>
     </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="!profileForm.valid">Register</button>
   </form>
 </main>
